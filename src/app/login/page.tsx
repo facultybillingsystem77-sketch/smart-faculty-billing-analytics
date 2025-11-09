@@ -41,7 +41,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4 !bg-red-100">
-      <Card className="shadow-xl !bg-sky-300 !w-6/12 !h-[495px] !max-w-[50%]">
+      <Card className="shadow-xl !w-6/12 !h-[495px] !max-w-[50%] !bg-transparent">
         <CardHeader className="space-y-1 text-center !bg-cyan-100">
           <div className="flex justify-center mb-2">
             <div className="p-3 bg-primary rounded-full">
@@ -53,7 +53,7 @@ export default function LoginPage() {
             Sign in to Smart Faculty Billing System
           </CardDescription>
         </CardHeader>
-        <CardContent className="!bg-pink-50 !w-[99.6%] !h-[344px]">
+        <CardContent className="!w-[99.6%] !h-[344px] !bg-transparent">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error &&
             <Alert variant="destructive">
