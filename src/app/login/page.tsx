@@ -41,7 +41,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4 !bg-red-100">
-      <Card className="shadow-xl !w-6/12 !h-[178px] !max-w-[50%] !bg-sky-300">
+      <Card className="shadow-xl !bg-sky-300 !w-6/12 !h-[495px] !max-w-[50%]">
         <CardHeader className="space-y-1 text-center !bg-cyan-100">
           <div className="flex justify-center mb-2">
             <div className="p-3 bg-primary rounded-full">
