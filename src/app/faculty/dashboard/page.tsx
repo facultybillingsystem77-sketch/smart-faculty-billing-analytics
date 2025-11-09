@@ -271,7 +271,7 @@ export default function FacultyDashboard() {
 
   return (
     <div className="p-8 !font-(family-name:--font-kalam) !bg-white">
-      <div className="mb-8 flex items-center justify-between !bg-slate-50 !font-(family-name:--font-roboto)">
+      <div className="mb-8 flex items-center justify-between !font-(family-name:--font-roboto) !bg-white">
         <div>
           <h1 className="text-3xl font-bold tracking-tight !bg-slate-50">Welcome, {profile.userName}</h1>
           <p className="text-muted-foreground">
@@ -453,7 +453,7 @@ export default function FacultyDashboard() {
         </Card>
 
         <Card className="!bg-gray-200">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !font-(family-name:--font-roboto) !bg-slate-400">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !font-(family-name:--font-roboto) !bg-white">
             <CardTitle className="text-sm font-medium">Total Records</CardTitle>
             <Receipt className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
