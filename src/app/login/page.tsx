@@ -90,7 +90,7 @@ export default function LoginPage() {
             <div className="flex items-center justify-between text-sm">
               <Link
                 href="/reset-password"
-                className="hover:underline !bg-cyan-950 !text-emerald-50">
+                className="hover:underline !text-violet-950 !bg-white">
 
                 Forgot password?
               </Link>
