@@ -271,7 +271,7 @@ export default function FacultyDashboard() {
 
   return (
     <div className="p-8 !font-(family-name:--font-kalam) !bg-purple-100">
-      <div className="mb-8 flex items-center justify-between !bg-slate-50">
+      <div className="mb-8 flex items-center justify-between !bg-slate-50 !font-(family-name:--font-roboto)">
         <div>
           <h1 className="text-3xl font-bold tracking-tight !bg-slate-50">Welcome, {profile.userName}</h1>
           <p className="text-muted-foreground">
@@ -417,7 +417,7 @@ export default function FacultyDashboard() {
 
       {/* Profile Summary Cards */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
-        <Card className="!bg-slate-100">
+        <Card className="!font-(family-name:--font-roboto) !bg-slate-100">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-slate-300">
             <CardTitle className="!w-[138px] !h-full !text-base !not-italic !font-(family-name:--font-open-sans) !font-black !flex !flex-col !items-end !justify-between !gap-px !opacity-100 !whitespace-pre-line !bg-slate-300">Faculty  ID    </CardTitle>
             <User className="h-4 w-4 text-muted-foreground" />
@@ -427,7 +427,7 @@ export default function FacultyDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="!bg-slate-100">
+        <Card className="!bg-slate-100 !font-(family-name:--font-roboto)">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-slate-300">
             <CardTitle className="font-medium !w-[109px] !h-full !text-[15px] !bg-slate-300">Base Salary</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
