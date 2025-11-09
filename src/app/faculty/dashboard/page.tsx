@@ -273,7 +273,7 @@ export default function FacultyDashboard() {
     <div className="p-8 !font-(family-name:--font-kalam)">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight !bg-emerald-200">Welcome, {profile.userName}</h1>
+          <h1 className="text-3xl font-bold tracking-tight !bg-sky-100">Welcome, {profile.userName}</h1>
           <p className="text-muted-foreground">
             {profile.designation} - {profile.department}
           </p>
@@ -418,7 +418,7 @@ export default function FacultyDashboard() {
       {/* Profile Summary Cards */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-green-200">
             <CardTitle className="font-medium !w-[138px] !h-full !text-base">Employee ID</CardTitle>
             <User className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
