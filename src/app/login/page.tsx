@@ -83,7 +83,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                disabled={loading} />
+                disabled={loading} className="!bg-emerald-50" />
 
             </div>
 
