@@ -99,7 +99,7 @@ export default function FacultyDashboard() {
 
   const handleUpdateProfile = async () => {
     if (!profile) return;
-    
+
     setSubmitting(true);
     try {
       const response = await fetch(`/api/faculty/${profile.id}`, {
@@ -133,7 +133,7 @@ export default function FacultyDashboard() {
     setSubmitting(true);
     try {
       // Calculate allowances based on workload (example calculation)
-      const allowances = (workloadForm.lectures * 50) + (workloadForm.labs * 40) + (workloadForm.tutorials * 30);
+      const allowances = workloadForm.lectures * 50 + workloadForm.labs * 40 + workloadForm.tutorials * 30;
       const netSalary = profile.baseSalary + allowances;
 
       const response = await fetch('/api/billing', {
@@ -181,11 +181,11 @@ export default function FacultyDashboard() {
     if (!profile) return;
 
     const doc = new jsPDF();
-    
+
     // Header
     doc.setFontSize(20);
     doc.text('Salary Slip', 105, 20, { align: 'center' });
-    
+
     doc.setFontSize(12);
     doc.text(`Employee: ${profile.userName}`, 20, 40);
     doc.text(`Employee ID: ${profile.employeeId}`, 20, 50);
@@ -199,32 +199,32 @@ export default function FacultyDashboard() {
       startY: 100,
       head: [['Description', 'Amount']],
       body: [
-        ['Base Salary', `$${record.baseSalary.toLocaleString()}`],
-        ['Allowances', `$${record.allowances.toLocaleString()}`],
-        ['Deductions', `$${record.deductions.toLocaleString()}`],
-        ['Net Salary', `$${record.netSalary.toLocaleString()}`],
-      ],
-      theme: 'grid',
+      ['Base Salary', `$${record.baseSalary.toLocaleString()}`],
+      ['Allowances', `$${record.allowances.toLocaleString()}`],
+      ['Deductions', `$${record.deductions.toLocaleString()}`],
+      ['Net Salary', `$${record.netSalary.toLocaleString()}`]],
+
+      theme: 'grid'
     });
 
     // Workload information
-    const workload = typeof record.workload === 'string' 
-      ? JSON.parse(record.workload) 
-      : record.workload;
+    const workload = typeof record.workload === 'string' ?
+    JSON.parse(record.workload) :
+    record.workload;
 
     autoTable(doc, {
       startY: (doc as any).lastAutoTable.finalY + 10,
       head: [['Workload Type', 'Hours']],
       body: [
-        ['Lectures', workload.lectures || 0],
-        ['Labs', workload.labs || 0],
-        ['Tutorials', workload.tutorials || 0],
-      ],
-      theme: 'grid',
+      ['Lectures', workload.lectures || 0],
+      ['Labs', workload.labs || 0],
+      ['Tutorials', workload.tutorials || 0]],
+
+      theme: 'grid'
     });
 
     doc.save(`salary-slip-${record.month}.pdf`);
-    
+
     toast.success('Salary slip downloaded successfully');
   };
 
@@ -232,7 +232,7 @@ export default function FacultyDashboard() {
     const variants: Record<string, 'default' | 'secondary' | 'destructive'> = {
       paid: 'default',
       processed: 'secondary',
-      pending: 'destructive',
+      pending: 'destructive'
     };
     return <Badge variant={variants[status] || 'default'}>{status}</Badge>;
   };
@@ -242,12 +242,12 @@ export default function FacultyDashboard() {
       <div className="p-8">
         <Skeleton className="h-8 w-64 mb-8" />
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
-          {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-32" />
-          ))}
+          {[...Array(4)].map((_, i) =>
+          <Skeleton key={i} className="h-32" />
+          )}
         </div>
-      </div>
-    );
+      </div>);
+
   }
 
   if (!profile) {
@@ -258,16 +258,16 @@ export default function FacultyDashboard() {
             <p className="text-muted-foreground">No faculty profile found</p>
           </CardContent>
         </Card>
-      </div>
-    );
+      </div>);
+
   }
 
   const currentMonthBilling = billingRecords[0]; // Most recent billing record
-  const workload = currentMonthBilling?.workload 
-    ? (typeof currentMonthBilling.workload === 'string' 
-        ? JSON.parse(currentMonthBilling.workload) 
-        : currentMonthBilling.workload)
-    : { lectures: 0, labs: 0, tutorials: 0 };
+  const workload = currentMonthBilling?.workload ?
+  typeof currentMonthBilling.workload === 'string' ?
+  JSON.parse(currentMonthBilling.workload) :
+  currentMonthBilling.workload :
+  { lectures: 0, labs: 0, tutorials: 0 };
 
   return (
     <div className="p-8">
@@ -300,8 +300,8 @@ export default function FacultyDashboard() {
                     id="phone"
                     placeholder="+1 (555) 000-0000"
                     value={editForm.phone}
-                    onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
-                  />
+                    onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })} />
+
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="address">Address</Label>
@@ -310,8 +310,8 @@ export default function FacultyDashboard() {
                     placeholder="Enter your address"
                     value={editForm.address}
                     onChange={(e) => setEditForm({ ...editForm, address: e.target.value })}
-                    rows={3}
-                  />
+                    rows={3} />
+
                 </div>
               </div>
               <div className="flex justify-end gap-2">
@@ -346,8 +346,8 @@ export default function FacultyDashboard() {
                     id="month"
                     type="month"
                     value={workloadForm.month}
-                    onChange={(e) => setWorkloadForm({ ...workloadForm, month: e.target.value })}
-                  />
+                    onChange={(e) => setWorkloadForm({ ...workloadForm, month: e.target.value })} />
+
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="lectures">Lectures (Hours)</Label>
@@ -357,8 +357,8 @@ export default function FacultyDashboard() {
                     min="0"
                     placeholder="0"
                     value={workloadForm.lectures}
-                    onChange={(e) => setWorkloadForm({ ...workloadForm, lectures: parseInt(e.target.value) || 0 })}
-                  />
+                    onChange={(e) => setWorkloadForm({ ...workloadForm, lectures: parseInt(e.target.value) || 0 })} />
+
                   <p className="text-xs text-muted-foreground">Allowance: $50 per hour</p>
                 </div>
                 <div className="space-y-2">
@@ -369,8 +369,8 @@ export default function FacultyDashboard() {
                     min="0"
                     placeholder="0"
                     value={workloadForm.labs}
-                    onChange={(e) => setWorkloadForm({ ...workloadForm, labs: parseInt(e.target.value) || 0 })}
-                  />
+                    onChange={(e) => setWorkloadForm({ ...workloadForm, labs: parseInt(e.target.value) || 0 })} />
+
                   <p className="text-xs text-muted-foreground">Allowance: $40 per hour</p>
                 </div>
                 <div className="space-y-2">
@@ -381,15 +381,15 @@ export default function FacultyDashboard() {
                     min="0"
                     placeholder="0"
                     value={workloadForm.tutorials}
-                    onChange={(e) => setWorkloadForm({ ...workloadForm, tutorials: parseInt(e.target.value) || 0 })}
-                  />
+                    onChange={(e) => setWorkloadForm({ ...workloadForm, tutorials: parseInt(e.target.value) || 0 })} />
+
                   <p className="text-xs text-muted-foreground">Allowance: $30 per hour</p>
                 </div>
                 <div className="pt-4 border-t">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Estimated Allowances:</span>
                     <span className="font-semibold">
-                      ${(workloadForm.lectures * 50) + (workloadForm.labs * 40) + (workloadForm.tutorials * 30)}
+                      ${workloadForm.lectures * 50 + workloadForm.labs * 40 + workloadForm.tutorials * 30}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm mt-1">
@@ -398,7 +398,7 @@ export default function FacultyDashboard() {
                   </div>
                   <div className="flex justify-between font-bold mt-2 pt-2 border-t">
                     <span>Total Estimated:</span>
-                    <span>${(profile.baseSalary + (workloadForm.lectures * 50) + (workloadForm.labs * 40) + (workloadForm.tutorials * 30)).toLocaleString()}</span>
+                    <span>${(profile.baseSalary + workloadForm.lectures * 50 + workloadForm.labs * 40 + workloadForm.tutorials * 30).toLocaleString()}</span>
                   </div>
                 </div>
               </div>
@@ -419,11 +419,11 @@ export default function FacultyDashboard() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Employee ID</CardTitle>
+            <CardTitle className="text-sm font-medium !w-[138px] !h-full">Employee ID</CardTitle>
             <User className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{profile.employeeId}</div>
+            <div className="text-2xl font-bold !w-full !h-full">{profile.employeeId}</div>
           </CardContent>
         </Card>
 
@@ -444,9 +444,9 @@ export default function FacultyDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {new Date(profile.joiningDate).toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'short' 
+              {new Date(profile.joiningDate).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short'
               })}
             </div>
           </CardContent>
@@ -486,25 +486,25 @@ export default function FacultyDashboard() {
               <p className="text-sm font-medium text-muted-foreground">Designation</p>
               <p className="text-lg">{profile.designation}</p>
             </div>
-            {profile.phone && (
-              <div>
+            {profile.phone &&
+            <div>
                 <p className="text-sm font-medium text-muted-foreground">Phone</p>
                 <p className="text-lg">{profile.phone}</p>
               </div>
-            )}
-            {profile.address && (
-              <div>
+            }
+            {profile.address &&
+            <div>
                 <p className="text-sm font-medium text-muted-foreground">Address</p>
                 <p className="text-lg">{profile.address}</p>
               </div>
-            )}
+            }
           </div>
         </CardContent>
       </Card>
 
       {/* Current Workload */}
-      {currentMonthBilling && (
-        <Card className="mb-8">
+      {currentMonthBilling &&
+      <Card className="mb-8">
           <CardHeader>
             <CardTitle>Current Month Workload ({currentMonthBilling.month})</CardTitle>
           </CardHeader>
@@ -525,7 +525,7 @@ export default function FacultyDashboard() {
             </div>
           </CardContent>
         </Card>
-      )}
+      }
 
       {/* Salary History */}
       <Card>
@@ -534,11 +534,11 @@ export default function FacultyDashboard() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {billingRecords.map((record) => (
-              <div
-                key={record.id}
-                className="flex items-center justify-between border-b pb-4 last:border-0"
-              >
+            {billingRecords.map((record) =>
+            <div
+              key={record.id}
+              className="flex items-center justify-between border-b pb-4 last:border-0">
+
                 <div className="flex-1">
                   <div className="flex items-center gap-4">
                     <div>
@@ -556,24 +556,24 @@ export default function FacultyDashboard() {
                     <p className="text-lg font-bold">${record.netSalary.toLocaleString()}</p>
                   </div>
                   <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => generatePDF(record)}
-                  >
+                  variant="outline"
+                  size="sm"
+                  onClick={() => generatePDF(record)}>
+
                     <Download className="h-4 w-4 mr-2" />
                     Download
                   </Button>
                 </div>
               </div>
-            ))}
-            {billingRecords.length === 0 && (
-              <p className="text-center text-muted-foreground py-8">
+            )}
+            {billingRecords.length === 0 &&
+            <p className="text-center text-muted-foreground py-8">
                 No salary records available
               </p>
-            )}
+            }
           </div>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
+
 }
