@@ -419,7 +419,7 @@ export default function FacultyDashboard() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
         <Card className="!bg-purple-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-purple-300">
-            <CardTitle className="font-medium !w-[138px] !h-full !text-base !bg-white !not-italic">Employee ID</CardTitle>
+            <CardTitle className="!w-[138px] !h-full !text-base !bg-white !not-italic !font-(family-name:--font-open-sans) !font-black !flex !flex-col !items-end !justify-between !gap-px !opacity-100">Employee ID</CardTitle>
             <User className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
