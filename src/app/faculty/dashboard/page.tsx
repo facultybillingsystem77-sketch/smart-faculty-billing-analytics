@@ -428,8 +428,8 @@ export default function FacultyDashboard() {
         </Card>
 
         <Card className="!font-(family-name:--font-roboto) !bg-gray-200">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-slate-400">
-            <CardTitle className="font-medium !w-[109px] !h-full !text-[15px] !bg-slate-400">Base Salary</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-white">
+            <CardTitle className="font-medium !w-[109px] !h-full !text-[15px] !bg-white">Base Salary</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
