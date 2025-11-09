@@ -273,7 +273,7 @@ export default function FacultyDashboard() {
     <div className="p-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Welcome, {profile.userName}</h1>
+          <h1 className="text-3xl font-bold tracking-tight !bg-emerald-200">Welcome, {profile.userName}</h1>
           <p className="text-muted-foreground">
             {profile.designation} - {profile.department}
           </p>
@@ -281,7 +281,7 @@ export default function FacultyDashboard() {
         <div className="flex gap-2">
           <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
             <DialogTrigger asChild>
-              <Button variant="outline">
+              <Button variant="outline" className="!not-italic !font-bold !underline !flex !flex-row !items-stretch !bg-zinc-500">
                 <Edit className="h-4 w-4 mr-2" />
                 Edit Profile
               </Button>
