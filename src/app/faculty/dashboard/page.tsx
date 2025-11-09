@@ -427,7 +427,7 @@ export default function FacultyDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="!bg-slate-100 !font-(family-name:--font-roboto)">
+        <Card className="!font-(family-name:--font-roboto) !bg-gray-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-slate-300">
             <CardTitle className="font-medium !w-[109px] !h-full !text-[15px] !bg-slate-300">Base Salary</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -437,7 +437,7 @@ export default function FacultyDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="!opacity-[0.98] !bg-slate-100 !font-(family-name:--font-roboto)">
+        <Card className="!opacity-[0.98] !font-(family-name:--font-roboto) !bg-gray-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-slate-300">
             <CardTitle className="text-sm font-medium">Joining Date</CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
