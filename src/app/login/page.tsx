@@ -25,7 +25,7 @@ export default function LoginPage() {
 
     try {
       const data = await loginUser(email, password);
-      
+
       // Redirect based on role
       if (data.user.role === 'admin') {
         router.push('/admin/dashboard');
@@ -53,13 +53,13 @@ export default function LoginPage() {
             Sign in to Smart Faculty Billing System
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="!bg-slate-400">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <Alert variant="destructive">
+            {error &&
+            <Alert variant="destructive">
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
-            )}
+            }
             
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -70,8 +70,8 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                disabled={loading}
-              />
+                disabled={loading} />
+
             </div>
             
             <div className="space-y-2">
@@ -83,32 +83,32 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                disabled={loading}
-              />
+                disabled={loading} />
+
             </div>
 
             <div className="flex items-center justify-between text-sm">
-              <Link 
-                href="/reset-password" 
-                className="text-primary hover:underline"
-              >
+              <Link
+                href="/reset-password"
+                className="text-primary hover:underline">
+
                 Forgot password?
               </Link>
             </div>
 
-            <Button 
-              type="submit" 
-              className="w-full" 
-              disabled={loading}
-            >
-              {loading ? (
-                <>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading}>
+
+              {loading ?
+              <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Signing in...
-                </>
-              ) : (
-                'Sign In'
-              )}
+                </> :
+
+              'Sign In'
+              }
             </Button>
 
             <div className="mt-4 p-3 bg-muted rounded-lg text-sm">
@@ -121,6 +121,6 @@ export default function LoginPage() {
           </form>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
+
 }
