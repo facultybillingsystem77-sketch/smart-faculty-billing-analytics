@@ -53,7 +53,7 @@ export default function LoginPage() {
             Sign in to Smart Faculty Billing System
           </CardDescription>
         </CardHeader>
-        <CardContent className="!bg-gray-300">
+        <CardContent className="!bg-pink-50">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error &&
             <Alert variant="destructive">
