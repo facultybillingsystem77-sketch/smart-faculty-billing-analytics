@@ -30,7 +30,7 @@ export default function FacultyLayout({
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b">
-        <div className="flex h-16 items-center justify-between px-8">
+        <div className="flex h-16 items-center justify-between px-8 !font-(family-name:--font-roboto)">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-primary" />
             <div>
