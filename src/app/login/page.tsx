@@ -43,12 +43,12 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4 !bg-red-100">
       <Card className="shadow-xl !w-6/12 !h-[495px] !max-w-[50%] !bg-white">
         <CardHeader className="space-y-1 text-center !bg-white">
-          <div className="flex justify-center mb-2">
+          <div className="flex justify-center mb-2 !bg-gray-100">
             <div className="p-3 bg-primary rounded-full">
               <GraduationCap className="h-8 w-8 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
+          <CardTitle className="text-2xl font-bold !bg-gray-200">Welcome Back</CardTitle>
           <CardDescription>
             Sign in to Smart Faculty Billing System
           </CardDescription>
