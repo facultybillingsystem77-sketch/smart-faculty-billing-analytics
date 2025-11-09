@@ -418,8 +418,8 @@ export default function FacultyDashboard() {
       {/* Profile Summary Cards */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
         <Card className="!font-(family-name:--font-roboto) !bg-gray-200">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-slate-400">
-            <CardTitle className="!w-[138px] !h-full !text-base !not-italic !font-(family-name:--font-open-sans) !font-black !flex !flex-col !items-end !justify-between !gap-px !opacity-100 !whitespace-pre-line !bg-slate-400">Faculty  ID    </CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-white">
+            <CardTitle className="!w-[138px] !h-full !text-base !not-italic !font-(family-name:--font-open-sans) !font-black !flex !flex-col !items-end !justify-between !gap-px !opacity-100 !whitespace-pre-line !bg-white">Faculty  ID    </CardTitle>
             <User className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
