@@ -438,7 +438,7 @@ export default function FacultyDashboard() {
         </Card>
 
         <Card className="!opacity-[0.98] !font-(family-name:--font-roboto) !bg-gray-200">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-slate-400">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-white">
             <CardTitle className="text-sm font-medium">Joining Date</CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
