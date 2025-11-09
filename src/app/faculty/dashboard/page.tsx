@@ -533,7 +533,7 @@ export default function FacultyDashboard() {
           <CardTitle>Salary History</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-4 !font-(family-name:--font-roboto)">
             {billingRecords.map((record) =>
             <div
               key={record.id}
