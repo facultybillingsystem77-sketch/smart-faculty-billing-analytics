@@ -438,7 +438,7 @@ export default function FacultyDashboard() {
         </Card>
 
         <Card className="!opacity-[0.98] !bg-slate-100">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-slate-300">
             <CardTitle className="text-sm font-medium">Joining Date</CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -453,7 +453,7 @@ export default function FacultyDashboard() {
         </Card>
 
         <Card className="!bg-slate-100">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-slate-300">
             <CardTitle className="text-sm font-medium">Total Records</CardTitle>
             <Receipt className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
