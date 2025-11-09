@@ -427,7 +427,7 @@ export default function FacultyDashboard() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="!bg-green-200">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="font-medium !w-[109px] !h-full !text-[15px]">Base Salary</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
@@ -437,7 +437,7 @@ export default function FacultyDashboard() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="!opacity-[0.98] !bg-fuchsia-100">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Joining Date</CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
