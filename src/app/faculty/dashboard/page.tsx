@@ -270,7 +270,7 @@ export default function FacultyDashboard() {
   { lectures: 0, labs: 0, tutorials: 0 };
 
   return (
-    <div className="p-8 !font-(family-name:--font-kalam) !bg-purple-100">
+    <div className="p-8 !font-(family-name:--font-kalam) !bg-white">
       <div className="mb-8 flex items-center justify-between !bg-slate-50 !font-(family-name:--font-roboto)">
         <div>
           <h1 className="text-3xl font-bold tracking-tight !bg-slate-50">Welcome, {profile.userName}</h1>
