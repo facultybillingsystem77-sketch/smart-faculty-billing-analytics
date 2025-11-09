@@ -70,7 +70,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                disabled={loading} className="!bg-slate-50" />
+                disabled={loading} className="!bg-teal-50" />
 
             </div>
             
