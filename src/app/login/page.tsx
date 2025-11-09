@@ -42,7 +42,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4 !bg-red-100">
       <Card className="w-full max-w-md shadow-xl">
-        <CardHeader className="space-y-1 text-center">
+        <CardHeader className="space-y-1 text-center !bg-cyan-100">
           <div className="flex justify-center mb-2">
             <div className="p-3 bg-primary rounded-full">
               <GraduationCap className="h-8 w-8 text-primary-foreground" />
