@@ -511,7 +511,7 @@ export default function FacultyDashboard() {
           <CardContent>
             <div className="grid gap-4 md:grid-cols-3">
               <div className="text-center p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                <p className="text-3xl font-bold text-blue-600">{workload.lectures}</p>
+                <p className="text-3xl font-bold text-blue-600 !bg-white">{workload.lectures}</p>
                 <p className="text-sm text-muted-foreground">Lectures</p>
               </div>
               <div className="text-center p-4 bg-green-50 dark:bg-green-950 rounded-lg">
@@ -519,7 +519,7 @@ export default function FacultyDashboard() {
                 <p className="text-sm text-muted-foreground">Labs</p>
               </div>
               <div className="text-center p-4 bg-purple-50 dark:bg-purple-950 rounded-lg">
-                <p className="text-3xl font-bold text-purple-600">{workload.tutorials}</p>
+                <p className="text-3xl font-bold text-purple-600 !bg-white">{workload.tutorials}</p>
                 <p className="text-sm text-muted-foreground">Tutorials</p>
               </div>
             </div>
