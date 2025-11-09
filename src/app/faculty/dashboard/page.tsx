@@ -423,7 +423,7 @@ export default function FacultyDashboard() {
             <User className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold !w-full !h-full">{profile.employeeId}</div>
+            <div className="text-2xl font-bold !w-full !h-full !font-(family-name:--font-open-sans)">{profile.employeeId}</div>
           </CardContent>
         </Card>
 
@@ -433,7 +433,7 @@ export default function FacultyDashboard() {
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${profile.baseSalary.toLocaleString()}</div>
+            <div className="text-2xl font-bold !font-(family-name:--font-open-sans)">${profile.baseSalary.toLocaleString()}</div>
           </CardContent>
         </Card>
 
