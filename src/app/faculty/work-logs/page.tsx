@@ -28,9 +28,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Plus, Pencil, Trash2, Clock, Calendar as CalendarIcon, Filter } from 'lucide-react';
+import { Plus, Pencil, Trash2, Clock, Calendar as CalendarIcon, Filter, AlertTriangle, CheckCircle2, XCircle, Info, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import { getUser } from '@/lib/auth';
 
@@ -67,6 +72,26 @@ interface FacultyProfile {
   userEmail: string;
 }
 
+interface ValidationIssue {
+  type: 'overlap' | 'impossible' | 'pattern' | 'anomaly';
+  severity: 'high' | 'medium' | 'low';
+  message: string;
+  logIds: number[];
+  suggestion?: string;
+  details?: any;
+}
+
+interface ValidationResult {
+  isValid: boolean;
+  issues: ValidationIssue[];
+  stats: {
+    totalLogs: number;
+    totalHours: number;
+    averageHoursPerDay: number;
+    maxHoursInDay: number;
+  };
+}
+
 const DEPARTMENTS = [
   'Artificial Intelligence & Data Science',
   'Mechatronics',
@@ -93,6 +118,9 @@ export default function WorkLogsPage() {
   const [submitting, setSubmitting] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingLog, setEditingLog] = useState<WorkLog | null>(null);
+  const [validating, setValidating] = useState(false);
+  const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
+  const [highlightedLogIds, setHighlightedLogIds] = useState<Set<number>>(new Set());
 
   // Filter states
   const [filterDepartment, setFilterDepartment] = useState<string>('all');
@@ -182,6 +210,56 @@ export default function WorkLogsPage() {
     }
   };
 
+  const handleValidate = async () => {
+    if (!profile) return;
+
+    setValidating(true);
+    setValidationResult(null);
+    setHighlightedLogIds(new Set());
+
+    try {
+      const response = await fetch('/api/work-logs/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          facultyId: profile.id,
+          startDate: filterStartDate || undefined,
+          endDate: filterEndDate || undefined,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Validation failed');
+      }
+
+      const result: ValidationResult = await response.json();
+      setValidationResult(result);
+
+      // Collect all log IDs mentioned in issues
+      const allIssueLogIds = new Set<number>();
+      result.issues.forEach((issue) => {
+        issue.logIds.forEach((id) => allIssueLogIds.add(id));
+      });
+      setHighlightedLogIds(allIssueLogIds);
+
+      if (result.isValid) {
+        toast.success('✓ All work logs validated successfully! No issues detected.');
+      } else {
+        const highSeverityCount = result.issues.filter((i) => i.severity === 'high').length;
+        if (highSeverityCount > 0) {
+          toast.error(`⚠ Found ${highSeverityCount} critical issue(s) that need attention`);
+        } else {
+          toast.warning(`Found ${result.issues.length} issue(s) - please review`);
+        }
+      }
+    } catch (error) {
+      console.error('Validation error:', error);
+      toast.error('Failed to validate work logs');
+    } finally {
+      setValidating(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!profile) return;
@@ -250,6 +328,9 @@ export default function WorkLogsPage() {
       setEditingLog(null);
       resetForm();
       await fetchWorkLogs(profile.id);
+      // Clear validation when logs change
+      setValidationResult(null);
+      setHighlightedLogIds(new Set());
     } catch (error: any) {
       console.error('Failed to submit work log:', error);
       toast.error(error.message || 'Failed to submit work log');
@@ -286,6 +367,9 @@ export default function WorkLogsPage() {
 
       toast.success('Work log deleted successfully');
       if (profile) await fetchWorkLogs(profile.id);
+      // Clear validation when logs change
+      setValidationResult(null);
+      setHighlightedLogIds(new Set());
     } catch (error) {
       console.error('Failed to delete work log:', error);
       toast.error('Failed to delete work log');
@@ -311,7 +395,12 @@ export default function WorkLogsPage() {
   };
 
   const applyFilters = () => {
-    if (profile) fetchWorkLogs(profile.id);
+    if (profile) {
+      fetchWorkLogs(profile.id);
+      // Clear validation when filters change
+      setValidationResult(null);
+      setHighlightedLogIds(new Set());
+    }
   };
 
   const clearFilters = () => {
@@ -319,7 +408,11 @@ export default function WorkLogsPage() {
     setFilterActivityType('all');
     setFilterStartDate('');
     setFilterEndDate('');
-    if (profile) fetchWorkLogs(profile.id);
+    if (profile) {
+      fetchWorkLogs(profile.id);
+      setValidationResult(null);
+      setHighlightedLogIds(new Set());
+    }
   };
 
   const getActivityBadge = (activityType: string) => {
@@ -339,6 +432,34 @@ export default function WorkLogsPage() {
         {label}
       </Badge>
     );
+  };
+
+  const getIssueSeverityIcon = (severity: string) => {
+    switch (severity) {
+      case 'high':
+        return <XCircle className="h-5 w-5 text-red-600" />;
+      case 'medium':
+        return <AlertTriangle className="h-5 w-5 text-orange-600" />;
+      case 'low':
+        return <Info className="h-5 w-5 text-blue-600" />;
+      default:
+        return <Info className="h-5 w-5" />;
+    }
+  };
+
+  const getIssueTypeLabel = (type: string) => {
+    switch (type) {
+      case 'overlap':
+        return 'Overlapping Hours';
+      case 'impossible':
+        return 'Impossible Entry';
+      case 'pattern':
+        return 'Suspicious Pattern';
+      case 'anomaly':
+        return 'Anomaly Detected';
+      default:
+        return type;
+    }
   };
 
   const calculateTotalHours = () => {
@@ -379,11 +500,129 @@ export default function WorkLogsPage() {
             Track your hours, activities, and tasks
           </p>
         </div>
-        <Button onClick={handleNewLog}>
-          <Plus className="h-4 w-4 mr-2" />
-          Log Work Hours
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={handleValidate} variant="outline" disabled={validating || workLogs.length === 0}>
+            <Sparkles className="h-4 w-4 mr-2" />
+            {validating ? 'Validating...' : 'AI Validate'}
+          </Button>
+          <Button onClick={handleNewLog}>
+            <Plus className="h-4 w-4 mr-2" />
+            Log Work Hours
+          </Button>
+        </div>
       </div>
+
+      {/* Validation Results */}
+      {validationResult && (
+        <div className="mb-6 space-y-4">
+          {/* Summary Card */}
+          <Card className={validationResult.isValid ? 'border-green-200 bg-green-50 dark:bg-green-950' : 'border-orange-200 bg-orange-50 dark:bg-orange-950'}>
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                {validationResult.isValid ? (
+                  <CheckCircle2 className="h-6 w-6 text-green-600" />
+                ) : (
+                  <AlertTriangle className="h-6 w-6 text-orange-600" />
+                )}
+                <div>
+                  <CardTitle className="text-lg">
+                    {validationResult.isValid ? 'All Clear!' : 'Issues Detected'}
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    {validationResult.isValid
+                      ? 'Your timesheet has been validated with no issues found.'
+                      : `Found ${validationResult.issues.length} issue(s) that need attention.`}
+                  </p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-4 gap-4">
+                <div>
+                  <p className="text-sm text-muted-foreground">Total Logs Checked</p>
+                  <p className="text-2xl font-bold">{validationResult.stats.totalLogs}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Total Hours</p>
+                  <p className="text-2xl font-bold">{validationResult.stats.totalHours}h</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Avg Hours/Day</p>
+                  <p className="text-2xl font-bold">{validationResult.stats.averageHoursPerDay}h</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Max Hours/Day</p>
+                  <p className="text-2xl font-bold">{validationResult.stats.maxHoursInDay}h</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Issues List */}
+          {validationResult.issues.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Detected Issues</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {validationResult.issues.map((issue, index) => (
+                  <Alert
+                    key={index}
+                    className={
+                      issue.severity === 'high'
+                        ? 'border-red-200 bg-red-50 dark:bg-red-950'
+                        : issue.severity === 'medium'
+                        ? 'border-orange-200 bg-orange-50 dark:bg-orange-950'
+                        : 'border-blue-200 bg-blue-50 dark:bg-blue-950'
+                    }
+                  >
+                    <div className="flex gap-3">
+                      {getIssueSeverityIcon(issue.severity)}
+                      <div className="flex-1">
+                        <AlertTitle className="flex items-center gap-2 mb-1">
+                          <Badge variant="outline" className="font-normal">
+                            {getIssueTypeLabel(issue.type)}
+                          </Badge>
+                          <Badge
+                            variant={
+                              issue.severity === 'high'
+                                ? 'destructive'
+                                : issue.severity === 'medium'
+                                ? 'default'
+                                : 'secondary'
+                            }
+                          >
+                            {issue.severity.toUpperCase()}
+                          </Badge>
+                        </AlertTitle>
+                        <AlertDescription>
+                          <p className="font-medium mb-2">{issue.message}</p>
+                          {issue.suggestion && (
+                            <p className="text-sm text-muted-foreground mb-2">
+                              💡 <span className="font-medium">Suggestion:</span> {issue.suggestion}
+                            </p>
+                          )}
+                          {issue.details && (
+                            <div className="text-xs bg-white/50 dark:bg-black/20 p-2 rounded mt-2">
+                              <p className="font-medium mb-1">Details:</p>
+                              <pre className="whitespace-pre-wrap">
+                                {JSON.stringify(issue.details, null, 2)}
+                              </pre>
+                            </div>
+                          )}
+                          <p className="text-xs mt-2 text-muted-foreground">
+                            Affected Log IDs: {issue.logIds.join(', ')}
+                          </p>
+                        </AlertDescription>
+                      </div>
+                    </div>
+                  </Alert>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
 
       {/* Statistics Cards */}
       <div className="grid gap-6 md:grid-cols-4 mb-8">
@@ -541,46 +780,55 @@ export default function WorkLogsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {workLogs.map((log) => (
-                  <TableRow key={log.id}>
-                    <TableCell>
-                      {new Date(log.date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-sm">
-                        <div>{log.timeIn} - {log.timeOut}</div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-sm">{log.department}</TableCell>
-                    <TableCell className="font-medium">{log.subject}</TableCell>
-                    <TableCell>{getActivityBadge(log.activityType)}</TableCell>
-                    <TableCell className="font-semibold">
-                      {log.totalHours.toFixed(2)}h
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleEdit(log)}
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(log.id)}
-                        >
-                          <Trash2 className="h-4 w-4 text-destructive" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {workLogs.map((log) => {
+                  const isHighlighted = highlightedLogIds.has(log.id);
+                  return (
+                    <TableRow
+                      key={log.id}
+                      className={isHighlighted ? 'bg-yellow-50 dark:bg-yellow-950/20 border-l-4 border-l-yellow-500' : ''}
+                    >
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          {isHighlighted && <AlertTriangle className="h-4 w-4 text-yellow-600" />}
+                          {new Date(log.date).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm">
+                          <div>{log.timeIn} - {log.timeOut}</div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-sm">{log.department}</TableCell>
+                      <TableCell className="font-medium">{log.subject}</TableCell>
+                      <TableCell>{getActivityBadge(log.activityType)}</TableCell>
+                      <TableCell className="font-semibold">
+                        {log.totalHours.toFixed(2)}h
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEdit(log)}
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDelete(log.id)}
+                          >
+                            <Trash2 className="h-4 w-4 text-destructive" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           )}
