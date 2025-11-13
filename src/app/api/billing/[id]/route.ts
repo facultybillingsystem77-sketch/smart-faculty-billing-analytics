@@ -197,3 +197,57 @@ export async function PUT(
     );
   }
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+
+    // Validate ID parameter
+    if (!id || isNaN(parseInt(id))) {
+      return NextResponse.json(
+        {
+          error: 'Valid ID is required',
+          code: 'INVALID_ID',
+        },
+        { status: 400 }
+      );
+    }
+
+    // Check if record exists
+    const existingRecord = await db
+      .select()
+      .from(billing)
+      .where(eq(billing.id, parseInt(id)))
+      .limit(1);
+
+    if (existingRecord.length === 0) {
+      return NextResponse.json(
+        { error: 'Billing record not found', code: 'NOT_FOUND' },
+        { status: 404 }
+      );
+    }
+
+    // Delete the record
+    const deleted = await db
+      .delete(billing)
+      .where(eq(billing.id, parseInt(id)))
+      .returning();
+
+    return NextResponse.json(
+      {
+        message: 'Billing record deleted successfully',
+        record: deleted[0],
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error('DELETE error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error: ' + error.message },
+      { status: 500 }
+    );
+  }
+}
