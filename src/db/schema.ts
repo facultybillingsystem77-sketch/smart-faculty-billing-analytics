@@ -42,3 +42,29 @@ export const billing = sqliteTable('billing', {
   createdAt: text('created_at').notNull(),
   updatedAt: text('updated_at').notNull(),
 });
+
+// Work logs table for faculty time tracking
+export const workLogs = sqliteTable('work_logs', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  facultyId: integer('faculty_id').references(() => faculty.id).notNull(),
+  date: text('date').notNull(),
+  timeIn: text('time_in').notNull(),
+  timeOut: text('time_out').notNull(),
+  department: text('department').notNull(),
+  subject: text('subject').notNull(),
+  activityType: text('activity_type').notNull(), // lecture, lab, tutorial, exam_duty, project_guidance, other
+  description: text('description'),
+  totalHours: real('total_hours').notNull(),
+  createdAt: text('created_at').notNull(),
+  updatedAt: text('updated_at').notNull(),
+});
+
+// Subjects table for managing subjects
+export const subjects = sqliteTable('subjects', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  name: text('name').notNull().unique(),
+  department: text('department').notNull(),
+  isActive: integer('is_active', { mode: 'boolean' }).notNull().default(true),
+  createdAt: text('created_at').notNull(),
+  updatedAt: text('updated_at').notNull(),
+});

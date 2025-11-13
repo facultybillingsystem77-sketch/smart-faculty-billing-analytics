@@ -1,17 +1,20 @@
 "use client";
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { getUser, logout } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
-import { GraduationCap, LogOut } from 'lucide-react';
+import { GraduationCap, LogOut, LayoutDashboard, ClipboardList } from 'lucide-react';
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 export default function FacultyLayout({
   children
-
-
-}: {children: React.ReactNode;}) {
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const user = getUser();
@@ -27,24 +30,60 @@ export default function FacultyLayout({
     router.push('/login');
   };
 
+  const navItems = [
+    {
+      href: '/faculty/dashboard',
+      label: 'Dashboard',
+      icon: LayoutDashboard,
+    },
+    {
+      href: '/faculty/work-logs',
+      label: 'Work Logs',
+      icon: ClipboardList,
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b">
-        <div className="flex h-16 items-center justify-between px-8 !font-(family-name:--font-roboto) !bg-white">
+        <div className="flex h-16 items-center justify-between px-8">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-primary" />
             <div>
-              <h1 className="text-lg font-bold !shadow-[0_6px_12px_-2px_rgba(226,232,240,0.2),0_4px_8px_-2px_rgba(226,232,240,0.15)] !bg-white">Faculty Portal</h1>
+              <h1 className="text-lg font-bold">Faculty Portal</h1>
               <p className="text-xs text-muted-foreground">Smart Billing System</p>
             </div>
           </div>
-          <Button variant="ghost" onClick={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </Button>
+          <div className="flex items-center gap-4">
+            <nav className="flex items-center gap-2">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = pathname === item.href;
+                return (
+                  <Link key={item.href} href={item.href}>
+                    <Button
+                      variant={isActive ? 'default' : 'ghost'}
+                      size="sm"
+                      className={cn(
+                        'gap-2',
+                        isActive && 'bg-primary text-primary-foreground'
+                      )}
+                    >
+                      <Icon className="h-4 w-4" />
+                      {item.label}
+                    </Button>
+                  </Link>
+                );
+              })}
+            </nav>
+            <Button variant="ghost" onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
+            </Button>
+          </div>
         </div>
       </header>
       <main>{children}</main>
-    </div>);
-
+    </div>
+  );
 }
