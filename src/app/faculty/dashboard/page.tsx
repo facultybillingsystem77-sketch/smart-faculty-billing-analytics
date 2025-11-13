@@ -270,10 +270,10 @@ export default function FacultyDashboard() {
   { lectures: 0, labs: 0, tutorials: 0 };
 
   return (
-    <div className="p-8 !font-(family-name:--font-kalam) !bg-white">
-      <div className="mb-8 flex items-center justify-between !font-(family-name:--font-roboto) !bg-white">
+    <div className="p-8">
+      <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight !bg-slate-50">Welcome, {profile.userName}</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Welcome, {profile.userName}</h1>
           <p className="text-muted-foreground">
             {profile.designation} - {profile.department}
           </p>
@@ -281,7 +281,7 @@ export default function FacultyDashboard() {
         <div className="flex gap-2">
           <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
             <DialogTrigger asChild>
-              <Button variant="outline" className="!not-italic !font-bold !underline !flex !flex-row !items-stretch !bg-gray-300">
+              <Button variant="outline">
                 <Edit className="h-4 w-4 mr-2" />
                 Edit Profile
               </Button>
@@ -417,33 +417,33 @@ export default function FacultyDashboard() {
 
       {/* Profile Summary Cards */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
-        <Card className="!font-(family-name:--font-roboto) !bg-gray-200">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-white">
-            <CardTitle className="!w-[138px] !h-full !text-base !not-italic !font-(family-name:--font-open-sans) !font-black !flex !flex-col !items-end !justify-between !gap-px !opacity-100 !whitespace-pre-line !bg-white">Faculty  ID    </CardTitle>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Faculty ID</CardTitle>
             <User className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold !w-full !h-full !font-(family-name:--font-open-sans)">{profile.employeeId}</div>
+            <div className="text-2xl font-bold">{profile.employeeId}</div>
           </CardContent>
         </Card>
 
-        <Card className="!font-(family-name:--font-roboto) !bg-gray-200">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-white">
-            <CardTitle className="font-medium !w-[109px] !h-full !text-[15px] !bg-white">Base Salary</CardTitle>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Base Salary</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold !font-(family-name:--font-open-sans)">${profile.baseSalary.toLocaleString()}</div>
+            <div className="text-2xl font-bold">${profile.baseSalary.toLocaleString()}</div>
           </CardContent>
         </Card>
 
-        <Card className="!opacity-[0.98] !font-(family-name:--font-roboto) !bg-gray-200">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !bg-white">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Joining Date</CardTitle>
             <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold !font-(family-name:--font-open-sans)">
+            <div className="text-2xl font-bold">
               {new Date(profile.joiningDate).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'short'
@@ -452,13 +452,13 @@ export default function FacultyDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="!bg-gray-200">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 !font-(family-name:--font-roboto) !bg-white">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Records</CardTitle>
             <Receipt className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold !font-(family-name:--font-open-sans)">{billingRecords.length}</div>
+            <div className="text-2xl font-bold">{billingRecords.length}</div>
           </CardContent>
         </Card>
       </div>
@@ -504,22 +504,22 @@ export default function FacultyDashboard() {
 
       {/* Current Workload */}
       {currentMonthBilling &&
-      <Card className="mb-8 !font-(family-name:--font-roboto)">
+      <Card className="mb-8">
           <CardHeader>
             <CardTitle>Current Month Workload ({currentMonthBilling.month})</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-3">
               <div className="text-center p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                <p className="text-3xl font-bold text-blue-600 !bg-white">{workload.lectures}</p>
+                <p className="text-3xl font-bold text-blue-600">{workload.lectures}</p>
                 <p className="text-sm text-muted-foreground">Lectures</p>
               </div>
               <div className="text-center p-4 bg-green-50 dark:bg-green-950 rounded-lg">
-                <p className="text-3xl font-bold text-green-600 !bg-white">{workload.labs}</p>
+                <p className="text-3xl font-bold text-green-600">{workload.labs}</p>
                 <p className="text-sm text-muted-foreground">Labs</p>
               </div>
               <div className="text-center p-4 bg-purple-50 dark:bg-purple-950 rounded-lg">
-                <p className="text-3xl font-bold text-purple-600 !bg-white">{workload.tutorials}</p>
+                <p className="text-3xl font-bold text-purple-600">{workload.tutorials}</p>
                 <p className="text-sm text-muted-foreground">Tutorials</p>
               </div>
             </div>
@@ -533,7 +533,7 @@ export default function FacultyDashboard() {
           <CardTitle>Salary History</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4 !font-(family-name:--font-roboto)">
+          <div className="space-y-4">
             {billingRecords.map((record) =>
             <div
               key={record.id}
