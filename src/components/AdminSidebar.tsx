@@ -10,7 +10,8 @@ import {
   Receipt, 
   BarChart3, 
   LogOut,
-  GraduationCap
+  GraduationCap,
+  BookOpen
 } from 'lucide-react';
 import { logout } from '@/lib/auth';
 
@@ -29,6 +30,11 @@ const menuItems = [
     title: 'Billing',
     icon: Receipt,
     href: '/admin/billing',
+  },
+  {
+    title: 'Subject Overview',
+    icon: BookOpen,
+    href: '/admin/subjects',
   },
   {
     title: 'Analytics',

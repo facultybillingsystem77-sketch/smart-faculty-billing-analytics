@@ -933,7 +933,7 @@ export default function FacultySubjectsPage() {
                     <SelectValue placeholder="Select semester" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                    <SelectItem value="none">None</SelectItem>
                     {semesters.map((sem) => (
                       <SelectItem key={sem.id} value={sem.id.toString()}>
                         {sem.semesterName} - {sem.year}
