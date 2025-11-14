@@ -45,7 +45,13 @@ interface Faculty {
   userEmail: string;
 }
 
-const DEPARTMENTS = ['Computer Science', 'Mathematics', 'Physics', 'Chemistry', 'Biology'];
+const DEPARTMENTS = [
+  'Artificial Intelligence & Data Science',
+  'Electrical Engineering',
+  'Food Technology',
+  'Mechatronics',
+  'Civil & Infrastructure'
+];
 const DESIGNATIONS = ['Professor', 'Associate Professor', 'Assistant Professor', 'Lecturer'];
 
 export default function FacultyManagementPage() {

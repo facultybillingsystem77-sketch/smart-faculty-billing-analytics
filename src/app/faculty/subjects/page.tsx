@@ -93,15 +93,10 @@ interface FacultySubjectMap {
 
 const DEPARTMENTS = [
   'Artificial Intelligence & Data Science',
-  'Mechatronics',
-  'Food Technology',
   'Electrical Engineering',
-  'Civil & Infrastructure',
-  'Computer Science',
-  'Mathematics',
-  'Physics',
-  'Chemistry',
-  'Biology',
+  'Food Technology',
+  'Mechatronics',
+  'Civil & Infrastructure'
 ];
 
 const SUBJECT_TYPES = ['Theory', 'Lab', 'Practical'];

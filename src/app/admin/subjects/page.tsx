@@ -95,15 +95,10 @@ interface SemesterView {
 
 const DEPARTMENTS = [
   'Artificial Intelligence & Data Science',
-  'Mechatronics',
-  'Food Technology',
   'Electrical Engineering',
-  'Civil & Infrastructure',
-  'Computer Science',
-  'Mathematics',
-  'Physics',
-  'Chemistry',
-  'Biology',
+  'Food Technology',
+  'Mechatronics',
+  'Civil & Infrastructure'
 ];
 
 export default function AdminSubjectsPage() {

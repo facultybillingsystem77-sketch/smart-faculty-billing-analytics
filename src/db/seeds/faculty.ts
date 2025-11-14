@@ -6,7 +6,7 @@ async function main() {
         {
             userId: 2,
             employeeId: 'FAC001',
-            department: 'Computer Science',
+            department: 'Artificial Intelligence & Data Science',
             designation: 'Professor',
             joiningDate: '2018-08-15',
             baseSalary: 95000,
@@ -18,7 +18,7 @@ async function main() {
         {
             userId: 3,
             employeeId: 'FAC002',
-            department: 'Computer Science',
+            department: 'Artificial Intelligence & Data Science',
             designation: 'Associate Professor',
             joiningDate: '2019-09-01',
             baseSalary: 72000,
@@ -30,7 +30,7 @@ async function main() {
         {
             userId: 4,
             employeeId: 'FAC003',
-            department: 'Computer Science',
+            department: 'Artificial Intelligence & Data Science',
             designation: 'Assistant Professor',
             joiningDate: '2021-01-10',
             baseSalary: 52000,
@@ -42,7 +42,7 @@ async function main() {
         {
             userId: 5,
             employeeId: 'FAC004',
-            department: 'Mathematics',
+            department: 'Electrical Engineering',
             designation: 'Professor',
             joiningDate: '2016-07-20',
             baseSalary: 105000,
@@ -54,7 +54,7 @@ async function main() {
         {
             userId: 6,
             employeeId: 'FAC005',
-            department: 'Mathematics',
+            department: 'Electrical Engineering',
             designation: 'Associate Professor',
             joiningDate: '2020-02-15',
             baseSalary: 68000,
@@ -66,7 +66,7 @@ async function main() {
         {
             userId: 7,
             employeeId: 'FAC006',
-            department: 'Mathematics',
+            department: 'Electrical Engineering',
             designation: 'Lecturer',
             joiningDate: '2022-08-01',
             baseSalary: 42000,
@@ -78,7 +78,7 @@ async function main() {
         {
             userId: 8,
             employeeId: 'FAC007',
-            department: 'Physics',
+            department: 'Food Technology',
             designation: 'Professor',
             joiningDate: '2015-09-10',
             baseSalary: 110000,
@@ -90,7 +90,7 @@ async function main() {
         {
             userId: 9,
             employeeId: 'FAC008',
-            department: 'Physics',
+            department: 'Food Technology',
             designation: 'Assistant Professor',
             joiningDate: '2020-11-05',
             baseSalary: 58000,
@@ -102,7 +102,7 @@ async function main() {
         {
             userId: 10,
             employeeId: 'FAC009',
-            department: 'Physics',
+            department: 'Food Technology',
             designation: 'Assistant Professor',
             joiningDate: '2021-06-12',
             baseSalary: 54000,
@@ -114,7 +114,7 @@ async function main() {
         {
             userId: 11,
             employeeId: 'FAC010',
-            department: 'Chemistry',
+            department: 'Mechatronics',
             designation: 'Associate Professor',
             joiningDate: '2018-03-20',
             baseSalary: 75000,
@@ -126,7 +126,7 @@ async function main() {
         {
             userId: 12,
             employeeId: 'FAC011',
-            department: 'Chemistry',
+            department: 'Mechatronics',
             designation: 'Associate Professor',
             joiningDate: '2019-05-18',
             baseSalary: 70000,
@@ -138,7 +138,7 @@ async function main() {
         {
             userId: 13,
             employeeId: 'FAC012',
-            department: 'Chemistry',
+            department: 'Mechatronics',
             designation: 'Lecturer',
             joiningDate: '2023-01-08',
             baseSalary: 38000,
@@ -150,7 +150,7 @@ async function main() {
         {
             userId: 14,
             employeeId: 'FAC013',
-            department: 'Biology',
+            department: 'Civil & Infrastructure',
             designation: 'Assistant Professor',
             joiningDate: '2020-09-25',
             baseSalary: 56000,
@@ -162,7 +162,7 @@ async function main() {
         {
             userId: 15,
             employeeId: 'FAC014',
-            department: 'Biology',
+            department: 'Civil & Infrastructure',
             designation: 'Assistant Professor',
             joiningDate: '2021-04-15',
             baseSalary: 50000,
@@ -174,7 +174,7 @@ async function main() {
         {
             userId: 16,
             employeeId: 'FAC015',
-            department: 'Biology',
+            department: 'Civil & Infrastructure',
             designation: 'Lecturer',
             joiningDate: '2022-10-20',
             baseSalary: 40000,

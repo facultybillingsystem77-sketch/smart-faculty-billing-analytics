@@ -3,7 +3,13 @@ import { db } from '@/db';
 import { faculty, user } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
-const VALID_DEPARTMENTS = ['Computer Science', 'Mathematics', 'Physics', 'Chemistry', 'Biology'];
+const VALID_DEPARTMENTS = [
+  'Artificial Intelligence & Data Science',
+  'Electrical Engineering',
+  'Food Technology',
+  'Mechatronics',
+  'Civil & Infrastructure'
+];
 const VALID_DESIGNATIONS = ['Professor', 'Associate Professor', 'Assistant Professor', 'Lecturer'];
 
 export async function GET(
