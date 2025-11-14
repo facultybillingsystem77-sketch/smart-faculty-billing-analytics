@@ -8,6 +8,13 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { getUser } from '@/lib/auth';
 import { Download, User, Receipt, Calendar, DollarSign, Edit, Plus } from 'lucide-react';
@@ -41,6 +48,19 @@ interface BillingRecord {
   generatedAt: string;
 }
 
+const DEPARTMENTS = [
+  'Artificial Intelligence & Data Science',
+  'Mechatronics',
+  'Food Technology',
+  'Electrical Engineering',
+  'Civil & Infrastructure',
+  'Computer Science',
+  'Mathematics',
+  'Physics',
+  'Chemistry',
+  'Biology',
+];
+
 export default function FacultyDashboard() {
   const [profile, setProfile] = useState<FacultyProfile | null>(null);
   const [billingRecords, setBillingRecords] = useState<BillingRecord[]>([]);
@@ -52,7 +72,8 @@ export default function FacultyDashboard() {
   // Edit profile form state
   const [editForm, setEditForm] = useState({
     phone: '',
-    address: ''
+    address: '',
+    department: ''
   });
 
   // Workload form state
@@ -81,7 +102,8 @@ export default function FacultyDashboard() {
         setProfile(myProfile);
         setEditForm({
           phone: myProfile.phone || '',
-          address: myProfile.address || ''
+          address: myProfile.address || '',
+          department: myProfile.department || ''
         });
 
         // Fetch billing records for this faculty
@@ -107,7 +129,8 @@ export default function FacultyDashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           phone: editForm.phone.trim() || null,
-          address: editForm.address.trim() || null
+          address: editForm.address.trim() || null,
+          department: editForm.department.trim() || null
         })
       });
 
@@ -290,10 +313,28 @@ export default function FacultyDashboard() {
               <DialogHeader>
                 <DialogTitle>Edit Profile</DialogTitle>
                 <DialogDescription>
-                  Update your contact information
+                  Update your contact information and department
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="department">Department</Label>
+                  <Select
+                    value={editForm.department}
+                    onValueChange={(value) => setEditForm({ ...editForm, department: value })}
+                  >
+                    <SelectTrigger id="department">
+                      <SelectValue placeholder="Select department" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {DEPARTMENTS.map((dept) => (
+                        <SelectItem key={dept} value={dept}>
+                          {dept}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone Number</Label>
                   <Input
