@@ -50,15 +50,10 @@ interface BillingRecord {
 
 const DEPARTMENTS = [
   'Artificial Intelligence & Data Science',
-  'Mechatronics',
-  'Food Technology',
   'Electrical Engineering',
+  'Food Technology',
+  'Mechatronics',
   'Civil & Infrastructure',
-  'Computer Science',
-  'Mathematics',
-  'Physics',
-  'Chemistry',
-  'Biology',
 ];
 
 export default function FacultyDashboard() {
