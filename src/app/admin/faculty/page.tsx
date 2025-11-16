@@ -59,6 +59,9 @@ export default function FacultyManagementPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deletingFaculty, setDeletingFaculty] = useState<Faculty | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [editingFaculty, setEditingFaculty] = useState<Faculty | null>(null);
   const [formLoading, setFormLoading] = useState(false);
   const { toast } = useToast();
@@ -132,11 +135,17 @@ export default function FacultyManagementPage() {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this faculty member?')) return;
+  const handleDeleteClick = (faculty: Faculty) => {
+    setDeletingFaculty(faculty);
+    setIsDeleteDialogOpen(true);
+  };
 
+  const handleDeleteConfirm = async () => {
+    if (!deletingFaculty) return;
+
+    setDeleteLoading(true);
     try {
-      const response = await fetch(`/api/faculty/${id}`, {
+      const response = await fetch(`/api/faculty/${deletingFaculty.id}`, {
         method: 'DELETE',
       });
 
@@ -153,6 +162,10 @@ export default function FacultyManagementPage() {
         description: 'Failed to delete faculty',
         variant: 'destructive',
       });
+    } finally {
+      setDeleteLoading(false);
+      setIsDeleteDialogOpen(false);
+      setDeletingFaculty(null);
     }
   };
 
@@ -250,7 +263,7 @@ export default function FacultyManagementPage() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleDelete(f.id)}
+                        onClick={() => handleDeleteClick(f)}
                       >
                         <Trash2 className="h-4 w-4 text-destructive" />
                       </Button>
@@ -263,6 +276,7 @@ export default function FacultyManagementPage() {
         )}
       </Card>
 
+      {/* Edit Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -391,6 +405,45 @@ export default function FacultyManagementPage() {
               </Button>
             </DialogFooter>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Faculty Member</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete <strong>{deletingFaculty?.userName}</strong> (
+              {deletingFaculty?.employeeId})? This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setIsDeleteDialogOpen(false);
+                setDeletingFaculty(null);
+              }}
+              disabled={deleteLoading}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDeleteConfirm}
+              disabled={deleteLoading}
+            >
+              {deleteLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                'Delete'
+              )}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
