@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db';
-import { faculty, user } from '@/db/schema';
+import { faculty, user, billing, workLogs, facultySubjectMap, timetable } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
 const VALID_DEPARTMENTS = [
@@ -225,6 +225,20 @@ export async function DELETE(
       );
     }
 
+    // Delete all related records first to avoid foreign key constraint errors
+    // 1. Delete billing records
+    await db.delete(billing).where(eq(billing.facultyId, parseInt(id)));
+
+    // 2. Delete work logs
+    await db.delete(workLogs).where(eq(workLogs.facultyId, parseInt(id)));
+
+    // 3. Delete faculty-subject mappings
+    await db.delete(facultySubjectMap).where(eq(facultySubjectMap.facultyId, parseInt(id)));
+
+    // 4. Delete timetable entries
+    await db.delete(timetable).where(eq(timetable.facultyId, parseInt(id)));
+
+    // 5. Finally, delete the faculty record
     const deleted = await db
       .delete(faculty)
       .where(eq(faculty.id, parseInt(id)))
