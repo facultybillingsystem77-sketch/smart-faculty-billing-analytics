@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { getUser, logout } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
-import { GraduationCap, LogOut, LayoutDashboard, ClipboardList, BookOpen, Calendar } from 'lucide-react';
+import { GraduationCap, LogOut, LayoutDashboard, ClipboardList, BookOpen, Calendar, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -50,6 +50,11 @@ export default function FacultyLayout({
       href: '/faculty/work-logs',
       label: 'Work Logs',
       icon: ClipboardList,
+    },
+    {
+      href: '/faculty/settings',
+      label: 'Settings',
+      icon: Settings,
     },
   ];
 

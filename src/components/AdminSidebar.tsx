@@ -11,7 +11,8 @@ import {
   BarChart3, 
   LogOut,
   GraduationCap,
-  BookOpen
+  BookOpen,
+  Settings
 } from 'lucide-react';
 import { logout } from '@/lib/auth';
 
@@ -40,6 +41,11 @@ const menuItems = [
     title: 'Analytics',
     icon: BarChart3,
     href: '/admin/analytics',
+  },
+  {
+    title: 'Settings',
+    icon: Settings,
+    href: '/admin/settings',
   },
 ];
 
